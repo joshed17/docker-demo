@@ -2,7 +2,7 @@ pipeline {
   environment {
      HOME = '$PWD'
    }
-node {
+stages {
    def commit_id
    stage('Preparation') {
      checkout scm
