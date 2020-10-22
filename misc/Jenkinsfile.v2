@@ -6,24 +6,16 @@ node {
      commit_id = readFile('.git/commit-id').trim()
    }
    stage('test') {
-      environment {
-    // Override HOME to WORKSPACE
-    NPM_CONFIG_CACHE="npm-cache"
-    HOME="." 
-  }
      def myTestContainer = docker.image('node:4.6')
      myTestContainer.pull()
      myTestContainer.inside {
+       sh 'npm install --unsafe-perm'
        sh 'npm install --only=dev'
        sh 'npm test'
      }
    }
    stage('test with a DB') {
-      environment {
-    // Override HOME to WORKSPACE
-    NPM_CONFIG_CACHE="npm-cache"
-    HOME="." 
-  }
+   
      def mysql = docker.image('mysql').run("-e MYSQL_ALLOW_EMPTY_PASSWORD=yes") 
      def myTestContainer = docker.image('node:4.6')
      myTestContainer.pull()
