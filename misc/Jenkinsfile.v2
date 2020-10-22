@@ -8,8 +8,8 @@ node {
    }
    
    environment {
-     HOME = '$PWD'
-
+     HOME= $PWD
+   }
    
    stage('test') {
      def myTestContainer = docker.image('node:4.6')
