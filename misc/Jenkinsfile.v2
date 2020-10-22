@@ -5,12 +5,12 @@ node {
      sh "git rev-parse --short HEAD > .git/commit-id"
      commit_id = readFile('.git/commit-id').trim()
    }
-   environment {
+   stage('test') {
+      environment {
     // Override HOME to WORKSPACE
     NPM_CONFIG_CACHE="npm-cache"
     HOME="." 
   }
-   stage('test') {
      def myTestContainer = docker.image('node:4.6')
      myTestContainer.pull()
      myTestContainer.inside {
@@ -19,6 +19,11 @@ node {
      }
    }
    stage('test with a DB') {
+      environment {
+    // Override HOME to WORKSPACE
+    NPM_CONFIG_CACHE="npm-cache"
+    HOME="." 
+  }
      def mysql = docker.image('mysql').run("-e MYSQL_ALLOW_EMPTY_PASSWORD=yes") 
      def myTestContainer = docker.image('node:4.6')
      myTestContainer.pull()
