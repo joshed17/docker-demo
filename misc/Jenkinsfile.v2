@@ -1,8 +1,8 @@
-node {
-   agent any
-   environment {
+pipeline {
+  environment {
      HOME = '$PWD'
    }
+node {
    def commit_id
    stage('Preparation') {
      checkout scm
@@ -34,4 +34,5 @@ node {
        def app = docker.build("joshed17/docker-nodejs-demo:${commit_id}", '.').push()
      }                                     
    }                                     
-}                                          
+  }      
+}                                    
