@@ -14,7 +14,7 @@ node {
      myTestContainer.pull()
      myTestContainer.inside {
        sh 'HOME=$PWD npm install --only=dev'
-       sh ''HOME=$PWD npm test'
+       sh 'HOME=$PWD npm test'
      }
    }
    stage('test with a DB') {
